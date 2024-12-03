@@ -6,6 +6,9 @@ import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -20,6 +23,8 @@ import classes.Aulas;
 import classes.Curso;
 import classes.Professor;
 import classes.Salas;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class TelaAulas extends JFrame {
 
@@ -43,7 +48,7 @@ public class TelaAulas extends JFrame {
 	private JTextField txtProfessor;
 	private JTextField txtInicio;
 	private JTextField txtTermino;
-	private JTextField textSala;
+	private JTextField txtSala;
 	
 	/*
 	 * Cria objetos , vai ficar em memoria
@@ -54,6 +59,7 @@ public class TelaAulas extends JFrame {
 	private Salas salas;
 	private Professor professor;
 	private Aulas aulas;
+	private List<Alunos> listaAluno;
 
 	/**
 	 * Launch the application.
@@ -75,13 +81,14 @@ public class TelaAulas extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaAulas() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\luan.zsfonseca\\Downloads\\Etherbrian-System-Error-Fatal.32.png"));
 		
 		//Vamos instanciar as nossas classes para gerar
 		//objetos dos itens relacionados a aula.
 		//Estes objetos estao vazio e serao preenchidos quando o 
 		//usuario clicar nos botões de incluir
 		curso = new Curso();
-		alunos = new Alunos();
+		listaAluno = new ArrayList<Alunos>();
 		salas = new Salas();
 		professor = new Professor();
 		aulas = new Aulas();
@@ -139,12 +146,12 @@ public class TelaAulas extends JFrame {
 		panel_curso.add(txtCargaHoraria);
 		txtCargaHoraria.setColumns(10);
 		
-		JLabel lblCargaHorria_1 = new JLabel("Preço do Curso");
-		lblCargaHorria_1.setForeground(Color.DARK_GRAY);
-		lblCargaHorria_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCargaHorria_1.setBackground(SystemColor.activeCaption);
-		lblCargaHorria_1.setBounds(371, 44, 149, 14);
-		panel_curso.add(lblCargaHorria_1);
+		JLabel lblPrecoDoCurso = new JLabel("Preço do Curso");
+		lblPrecoDoCurso.setForeground(Color.DARK_GRAY);
+		lblPrecoDoCurso.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblPrecoDoCurso.setBackground(SystemColor.activeCaption);
+		lblPrecoDoCurso.setBounds(371, 44, 149, 14);
+		panel_curso.add(lblPrecoDoCurso);
 		
 		txtPrecoDoCurso = new JTextField();
 		txtPrecoDoCurso.setColumns(10);
@@ -241,6 +248,10 @@ public class TelaAulas extends JFrame {
 		panel_aluno.add(lblNomeDoAluno);
 		
 		txtNomeDoAluno = new JTextField();
+		txtNomeDoAluno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		txtNomeDoAluno.setColumns(10);
 		txtNomeDoAluno.setBounds(10, 30, 396, 20);
 		panel_aluno.add(txtNomeDoAluno);
@@ -307,6 +318,10 @@ public class TelaAulas extends JFrame {
 		panel_aulas.add(txtCurs);
 		
 		txtCurso = new JTextField();
+		txtCurso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		txtCurso.setColumns(10);
 		txtCurso.setBounds(292, 9, 206, 20);
 		panel_aulas.add(txtCurso);
@@ -354,32 +369,35 @@ public class TelaAulas extends JFrame {
 		txtAlunos.setBounds(440, 49, 169, 14);
 		panel_aulas.add(txtAlunos);
 		
-		JComboBox cboaluno = new JComboBox();
-		cboaluno.addActionListener(new ActionListener() {
+		JComboBox cboalunos = new JComboBox();
+		cboalunos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cboaluno.addItem(txtNomeDoAluno.getText());
+				
 			}
 		});
-		cboaluno.setBounds(533, 48, 262, 17);
-		panel_aulas.add(cboaluno);
+		cboalunos.setBounds(533, 48, 262, 17);
+		panel_aulas.add(cboalunos);
 		
 		JLabel txtSal = new JLabel("Sala");
 		txtSal.setFont(new Font("Tahoma", Font.BOLD, 12));
 		txtSal.setBounds(10, 81, 46, 14);
 		panel_aulas.add(txtSal);
 		
-		textSala = new JTextField();
-		textSala.addActionListener(new ActionListener() {
+		txtSala = new JTextField();
+		txtSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		textSala.setBounds(93, 78, 123, 20);
-		panel_aulas.add(textSala);
-		textSala.setColumns(10);
+		txtSala.setBounds(93, 78, 123, 20);
+		panel_aulas.add(txtSala);
+		txtSala.setColumns(10);
 		
 		JButton btnIncluirCurso = new JButton("Incluir curso");
+		btnIncluirCurso.setIcon(new ImageIcon("C:\\Users\\luan.zsfonseca\\Downloads\\Benno-Meyer-Benno-System-Book-Grey.32.png"));
 		btnIncluirCurso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
 				//obter o texto que esta na caixa de titulo do curso e
 				//adcionar a caixa curso que esta na area do Criar Aula
 				txtCurso.setText(txtTituloDoCurso.getText());
@@ -400,23 +418,39 @@ public class TelaAulas extends JFrame {
 				btnIncluirCurso.setEnabled(false);
 			}
 		});
-		btnIncluirCurso.setBounds(10, 510, 141, 23);
+		btnIncluirCurso.setBounds(10, 510, 141, 60);
 		contentPane.add(btnIncluirCurso);
 		
 		JButton btnIncluirSala = new JButton("Incluir sala");
+		btnIncluirSala.setIcon(new ImageIcon("C:\\Users\\luan.zsfonseca\\Downloads\\Benno-Meyer-Benno-System-Book-Grey.32.png"));
 		btnIncluirSala.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				//Preencher os dados do objeto sala
+				salas.setIdentificacao(txtIdentificacao.getText());
+				salas.setDescricao(txtDescricao.getText());
+				
+				txtSala.setText(txtIdentificacao.getText());
+				
 				btnIncluirSala.setEnabled(false);
 				txtIdentificacao.setEnabled(false);
 				txtDescricao.setEnabled(false);
 			}
 		});
-		btnIncluirSala.setBounds(161, 510, 141, 23);
+		btnIncluirSala.setBounds(161, 510, 141, 60);
 		contentPane.add(btnIncluirSala);
 		
 		JButton btnIncluirProfessor = new JButton("Incluir professor");
+		btnIncluirProfessor.setIcon(new ImageIcon("C:\\Users\\luan.zsfonseca\\Downloads\\Benno-Meyer-Benno-System-Book-Grey.32.png"));
 		btnIncluirProfessor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				professor.setNome(txtNomeDoProfessor.getText());
+				professor.setEmail(txtEmailDoProfessor.getText());
+				professor.setCpf(txtCPFDoProfessor.getText());
+				
+				txtProfessor.setText(txtNomeDoProfessor.getText());
+				
 				btnIncluirProfessor.setEnabled(false);
 				txtCurso.setText(txtNomeDoProfessor.getText());
 				txtNomeDoProfessor.setEnabled(false);
@@ -424,36 +458,67 @@ public class TelaAulas extends JFrame {
 				txtCPFDoProfessor.setEnabled(false);
 			}
 		});
-		btnIncluirProfessor.setBounds(312, 510, 141, 23);
+		btnIncluirProfessor.setBounds(312, 510, 141, 60);
 		contentPane.add(btnIncluirProfessor);
 		
 		JButton btnIncluirAluno = new JButton("Incluir aluno");
+		btnIncluirAluno.setIcon(new ImageIcon("C:\\Users\\luan.zsfonseca\\Downloads\\Benno-Meyer-Benno-System-Book-Grey.32.png"));
 		btnIncluirAluno.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				alunos = new Alunos();
+				
+				alunos.setNome(txtNomeDoAluno.getText());
+				alunos.setEmail(txtEmailDoAluno.getText());
+				alunos.setCpf(txtCPFDoAluno.getText());
+				alunos.setIdade(Integer.parseInt(txtIdade.getText()));
+				listaAluno.add(alunos);
+				
+				
+				cboalunos.addItem(txtNomeDoAluno.getText());
+				
 				btnIncluirAluno.setEnabled(false);
 				txtCurso.setText(txtNomeDoAluno.getText());
 				txtNomeDoAluno.setEnabled(false);
 				txtEmailDoAluno.setEnabled(false);
 				txtIdade.setEnabled(false);
 				txtCPFDoAluno.setEnabled(false);
+				
+				listaAluno.add(alunos);
 			}
 		});
-		btnIncluirAluno.setBounds(463, 510, 141, 23);
+		btnIncluirAluno.setBounds(463, 510, 141, 60);
 		contentPane.add(btnIncluirAluno);
 		
 		JButton btnCriarAAula = new JButton("Criar a Aula");
+		btnCriarAAula.setIcon(new ImageIcon("C:\\Users\\luan.zsfonseca\\Downloads\\Benno-Meyer-Benno-System-Book-Grey.32.png"));
 		btnCriarAAula.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				aulas.setId(Integer.parseInt(txtIdDaAula.getText()));
+				aulas.setCurso(curso);
+				aulas.setProfessor(professor);
+				
+				aulas.setInicio(new Date(Long.parseLong(txtInicio.getText())));
+				aulas.setTermino(new Date(Long.parseLong(txtTermino.getText())));
+				
+				aulas.setAlunos(listaAluno.toArray(new Alunos[0]));
+				aulas.setSala(salas);
+				
+				
 				btnCriarAAula.setEnabled(false);
+				txtSala.setEnabled(false);
 				txtInicio.setEnabled(false);
 				txtTermino.setEnabled(false);
 				txtProfessor.setEnabled(false);
 				txtIdDaAula.setEnabled(false);
 				txtCurso.setEnabled(false);
-				cboaluno.setEnabled(false);
+				cboalunos.setEnabled(false);
+				
+				System.out.print(cboalunos.getItemAt(0));
 			}
 		});
-		btnCriarAAula.setBounds(625, 510, 141, 23);
+		btnCriarAAula.setBounds(625, 510, 141, 60);
 		contentPane.add(btnCriarAAula);
 	}
 }
